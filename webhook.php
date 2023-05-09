@@ -73,5 +73,22 @@
 	
 	if($o[0] !== $data_json['repository']['url'])incorrect_data();
 	
-	exec("cd ".$repo_list[$git_fullname][0]." && ".$git_pull." ".$repo_list[$git_fullname][1]." ".$repo_list[$git_fullname][2]);
+	$o=NULL;
+	$r=NULL;
+	
+	exec("cd ".$repo_list[$git_fullname][0]." && ".$git_pull." ".$repo_list[$git_fullname][1]." ".$repo_list[$git_fullname][2]." 2>&1", $o, $r);
+	
+	if($r !== 0)
+	{
+		header("HTTP/1.0 500 Internal Server Error");
+		echo "<html>";
+		echo "<head><title>500 Internal Server Error</title></head>";
+		echo "<body>";
+		echo "<center><h1>500 Internal Server Error</h1></center>";
+		echo "<hr>";
+		echo "</body>";
+		echo "</html>";
+		
+		exit();
+	}
 ?>
